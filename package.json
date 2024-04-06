@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "colyseus.js": "^0.15.18",
-    "grid-engine": "^2.44.2",
     "phaser": "^3.80.1"
   }
 }
