@@ -9,8 +9,8 @@ export class WelcomeScene extends Phaser.Scene {
     // Load any assets needed for the welcome screen
     this.load.image('background', 'assets/welcome/screen.png');
     this.load.image('startButton', 'assets/welcome/start.png');
+    this.load.audio('backgroundMusic', 'assets/audio/background starting sound.mp3');
     this.load.image('grass', 'assets/tiles/grass.png');
-    this.load.audio('backgroundMusic', 'assets/audio/All Gifts Are Mine Full Song.mp3');
   }
 
   create() {
@@ -34,6 +34,7 @@ export class WelcomeScene extends Phaser.Scene {
 
     characterButton.on('pointerdown', () => {
       this.scene.start('CharacterTestScene');
+      this.sound.play('backgroundMusic', { loop: false });
     });
 
     this.sound.play('backgroundMusic', { loop: true });
