@@ -36,7 +36,11 @@ export class WelcomeScene extends Phaser.Scene {
       this.scene.start('CharacterTestScene');
       this.sound.play('backgroundMusic', { loop: false });
     });
+    startButton.on('pointerdown', () => {
+      this.sound.stopByKey('backgroundMusic'); // Stop the background music before changing the scene
+      this.scene.start('StrategyMapScene');
+    });
 
-    this.sound.play('backgroundMusic', { loop: true });
+    this.sound.play('backgroundMusic', { loop: true, volume:0.25 });
   }
 }
