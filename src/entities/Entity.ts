@@ -5,7 +5,13 @@ export class Entity extends Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.getBody().setCollideWorldBounds(true);
-
+    }
+    protected checkFlip(): void {
+        if (this.body.velocity.x < 0) {
+          this.scaleX = -1;
+        } else {
+          this.scaleX = 1;
+        }
     }
     protected getBody(): Physics.Arcade.Body {
         return this.body as Physics.Arcade.Body;
