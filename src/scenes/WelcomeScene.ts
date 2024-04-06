@@ -34,6 +34,7 @@ export class WelcomeScene extends Phaser.Scene {
 
     characterButton.on('pointerdown', () => {
       this.scene.start('CharacterTestScene');
+      this.sound.play('backgroundMusic', { loop: false });
     });
 
     this.sound.play('backgroundMusic', { loop: true });
