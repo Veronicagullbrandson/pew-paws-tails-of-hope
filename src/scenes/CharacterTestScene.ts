@@ -17,7 +17,6 @@ export class CharacterTestScene extends Phaser.Scene {
     }
 
     create() {
-        this.add.image(100, 100, 'grass');
         this.player = new Player(this, 100, 200);
     }
 
