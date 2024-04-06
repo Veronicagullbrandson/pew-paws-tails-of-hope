@@ -148,7 +148,7 @@ Installing Node.js on your system is the first step to getting this game up and 
 3. Install dependencies:
 
    ```bash
-   npm install --force
+   npm install
    ```
 
 4. Start the development server:

@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import { GridEngine } from 'grid-engine';
 import { WelcomeScene } from './scenes/WelcomeScene';
 import { StrategyMapScene } from './scenes/StrategyMapScene';
 import { CharacterTestScene } from './scenes/CharacterTestScene';
@@ -14,15 +13,6 @@ const config: Phaser.Types.Core.GameConfig = {
     arcade: {
       debug: false,
     },
-  },
-  plugins: {
-    scene: [
-      {
-        key: "gridEngine",
-        plugin: GridEngine,
-        mapping: "gridEngine",
-      },
-    ],
   },
 };
 

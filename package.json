@@ -13,7 +13,6 @@
     "vite": "^5.2.0"
   },
   "dependencies": {
-    "grid-engine": "^2.44.2",
     "phaser": "^3.80.1"
   }
 }
