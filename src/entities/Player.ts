@@ -16,8 +16,8 @@ export class Player extends Entity {
         this.keyD = this.scene.input.keyboard.addKey('D');
         this.keyShift = this.scene.input.keyboard.addKey('Shift');
         this.keySpace = this.scene.input.keyboard.addKey('Space'); 
-        this.getBody().setSize(30, 30);
-        this.getBody().setOffset(8, 0);
+        this.getBody().setSize(16, 16);
+        this.getBody().setOffset(0, 0);
         this.initAnimation();
         this.launchTimer = 0;
     }
@@ -45,7 +45,7 @@ export class Player extends Entity {
       if (this.keyA?.isDown) {
         this.body.velocity.x = -speed;
         this.checkFlip();
-        this.getBody().setOffset(48, 15);
+        this.getBody().setOffset(16, 0);
       }
       if (this.keyS?.isDown) {
         this.body.velocity.y = speed;
@@ -53,7 +53,7 @@ export class Player extends Entity {
       if (this.keyD?.isDown) {
         this.body.velocity.x = speed;
         this.checkFlip();
-        this.getBody().setOffset(15, 15);
+        this.getBody().setOffset(0, 0);
       }
       if (this.keySpace?.isDown && this.launchTimer == 0){
         this.scene.sound.play('bananljud');
