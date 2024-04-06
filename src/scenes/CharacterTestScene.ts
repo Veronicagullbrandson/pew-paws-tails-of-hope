@@ -12,9 +12,12 @@ private player: Player
     preload() {
       this.load.image('grass', 'assets/tiles/grass.png');
       this.load.image('cat', 'assets/tiles/grass.png');
+      this.load.spritesheet('runSprite', 'assets/sprites/7 walk.png', { frameWidth: 16, frameHeight: 16 });
+    
     }
 
     create() {
+
         this.add.image(100, 100, 'grass');
         this.player = new Player(this, 100, 200);
     }
