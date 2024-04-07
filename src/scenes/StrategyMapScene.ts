@@ -5,10 +5,13 @@ import { Enemy } from './../entities/Enemy';
 export class StrategyMapScene extends Phaser.Scene {
     private player: Player;
     private enemy: Enemy;
-    
+    private enemies: Array<Enemy>;
+    private collision: Tilemap;
+
 
     constructor() {
       super('StrategyMapScene');
+      this.enemies = [];
     }
 
     preload() {
@@ -30,19 +33,19 @@ export class StrategyMapScene extends Phaser.Scene {
         const map = this.make.tilemap({ key: "map" });
         const tileset = map.addTilesetImage("Tileset", "tiles");
         const floor = map.createLayer('Floor', tileset, 0, 0);
-        const collision = map.createLayer('Collision', tileset, 0, 0);
-        collision.setCollisionByExclusion([-1], true);
+        this.collision = map.createLayer('Collision', tileset, 0, 0);
+        this.collision.setCollisionByExclusion([-1], true);
 
         this.player = new Player(this, 300, 300);
-        this.enemy = new Enemy(this, 400, 300);
-        this.physics.add.collider(this.player, collision);
-        this.physics.add.collider(this.enemy, collision);
+        this.enemies.push(new Enemy(this, 400, 300));
+        this.physics.add.collider(this.player, this.collision);
+        this.physics.add.collider(this.enemies[0], this.collision);
 
         // Lägg till en timer som skadar fienden efter 5 sekunder
         this.time.addEvent({
             delay: 5000, // 5000 ms = 5 sekunder
             callback: () => {
-                this.enemy.takeDamage(1); // Skadar fienden med 10 poäng
+                this.enemies[0].takeDamage(1); // Skadar fienden med 10 poäng
             },
             callbackScope: this,
             loop: false // Om du vill att detta ska upprepas, sätt loop till true
@@ -50,10 +53,20 @@ export class StrategyMapScene extends Phaser.Scene {
     }
 
     update(): void {
+        if (Math.floor(Math.random() * 400) == 0) {
+            this.enemies.push(new Enemy(this, 400, 300));
+            this.physics.add.collider(this.enemies[this.enemies.length - 1], this.collision);
+        }
         this.player.update();
+        for (let i = 0; i < this.enemies.length; i++) {
+          if(this.enemies[i].body != undefined) {
+            this.enemies[i].update();
+          }
+        }
+        /*
         if(this.enemy.body != undefined) {
             this.enemy.update();
         }
-        
+        */
     }
 }
