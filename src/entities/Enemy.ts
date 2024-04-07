@@ -48,21 +48,20 @@ export class Enemy extends Entity {
       this.anims.play('EnemyDownRun', true);
     }
 
-    update(): void {
-      if (this.isDead) {
-        return;
-      }
+  update(): void {
+    if (this.isDead) {
+      return;
+    }
 
-      const projectiles = this.scene.player.projectiles;
-      let hit = false;
-      breakme: for (let i = 0; i < projectiles.length; i++) {
-        this.scene.physics.add.overlap(this, projectiles[i], () =>
-        {
-            this.takeDamage(1);
-            console.log("Hit");
-            hit = true;
-            projectiles[i].destroy();
-        });
+    const projectiles = this.scene.player.projectiles;
+    let hit = false;
+    breakme: for (let i = 0; i < projectiles.length; i++) {
+      this.scene.physics.add.overlap(this, projectiles[i], () => {
+        this.takeDamage(1);
+        console.log("Hit");
+        hit = true;
+        projectiles[i].destroy();
+      });
       this.counter--;
       if (this.counter == 0) {
         this.direction = Math.floor(Math.random() * 4);
@@ -104,18 +103,19 @@ export class Enemy extends Entity {
         }
       }
     }
-    // Metod för att ta skada
-    public EnemytakeDamage(damage: integer): void {
+  }
+    // Method for taking damage
+    public takeDamage(damage: integer): void {
       this.health -= damage;
       if (this.health <= 0) {
           this.die();
       }
     }
 
-    // Metod för att hantera död
+    // Method for handling death
     private die(): void {
         this.scene.sound.play('EnemyDead');
-        this.destroy(); // Exempel på att ta bort fienden från spelet
+        this.destroy(); // Example of removing the enemy from the game
         this.isDead = true;
     }
 }
