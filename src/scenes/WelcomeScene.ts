@@ -28,12 +28,9 @@ export class WelcomeScene extends Phaser.Scene {
       startButton.y += 2; // Move the button back down by 2 pixels when the pointer is no longer over it
     });
 
-    startButton.on('pointerdown', () => {
-      this.scene.start('StrategyMapScene');
-    });
 
     characterButton.on('pointerdown', () => {
-      this.scene.start('CharacterTestScene');
+      this.scene.start('ServerTestScene');
       this.sound.play('backgroundMusic', { loop: false });
     });
     startButton.on('pointerdown', () => {
