@@ -1,6 +1,5 @@
 
 import Phaser from 'phaser';
-import { GridEngine } from 'grid-engine';
 import { Player } from './../entities/Player';
 
 export class CharacterTestScene extends Phaser.Scene {
@@ -13,7 +12,9 @@ export class CharacterTestScene extends Phaser.Scene {
       this.load.image('grass', 'assets/tiles/grass.png');
       this.load.image('cat', 'assets/tiles/grass.png');
       this.load.spritesheet('runSprite', 'assets/sprites/Enzo walk.png', { frameWidth: 28, frameHeight: 32 });
+      this.load.image('projectile', 'assets/tiles/grass.png');
       this.load.audio('bananljud', 'assets/audio/bananljud.mp3');  
+      this.load.spritesheet('projectileSprite', 'assets/sprites/bollElla.png', { frameWidth: 16, frameHeight: 16 });
     }
 
     create() {
