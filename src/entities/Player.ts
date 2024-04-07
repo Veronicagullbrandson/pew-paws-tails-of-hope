@@ -12,7 +12,7 @@ export class Player extends Entity {
   private keyRight: Phaser.Input.Keyboard.Key;
   private launchTimer: integer;
   private projectiles: Array<Projectile>;
-
+  private lastPosition: Phaser.Math.Vector2;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'cat');
@@ -29,7 +29,7 @@ export class Player extends Entity {
 
 
     this.getBody().setSize(28, 32);
-    this.getBody().setOffset(8, 0);
+    this.getBody().setOffset(0, 0);
     this.initAnimation();
     this.launchTimer = 0;
   }
@@ -58,6 +58,8 @@ export class Player extends Entity {
       frameRate: 5,
       repeat: -1 // Loop forever
     });
+    // Add the following line to start the 'EnzoDownRun' animation immediately
+    this.anims.play('EnzoDownRun', true);
   }
 
   update(): void {
@@ -76,19 +78,19 @@ export class Player extends Entity {
 
     if (this.keyW?.isDown) {
       this.body.velocity.y = -speed;
-      this.anims.play('EnzoUpRun', true)
+      this.anims.play('EnzoUpRun', true);
     }
     if (this.keyA?.isDown) {
       this.body.velocity.x = -speed;
-      this.anims.play('EnzoLeftRun', true)
+      this.anims.play('EnzoLeftRun', true);
     }
     if (this.keyS?.isDown) {
       this.body.velocity.y = speed;
-      this.anims.play('EnzoDownRun', true)
+      this.anims.play('EnzoDownRun', true);
     }
     if (this.keyD?.isDown) {
       this.body.velocity.x = speed;
-      this.anims.play('EnzoRightRun', true)
+      this.anims.play('EnzoRightRun', true);
     }
     if (this.keyUp?.isDown && this.launchTimer == 0) {
       this.scene.sound.play('bananljud');
@@ -118,8 +120,13 @@ export class Player extends Entity {
       console.log()
     }
 
-
-  
+    const currentPos = new Phaser.Math.Vector2(this.x, this.y);
+    if (this.lastPosition) {
+      const diff = currentPos.clone().subtract(this.lastPosition);
+      if (diff.length() == 0) {
+        this.anims.stop();
+      }
+    }
+    this.lastPosition = new Phaser.Math.Vector2(this.x, this.y);
   }
-
 }
