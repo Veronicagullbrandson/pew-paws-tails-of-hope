@@ -46,6 +46,8 @@ export class Player extends Entity {
       frameRate: 5,
       repeat: -1 // Loop forever
     });
+    // Add the following line to start the 'EnzoDownRun' animation immediately
+    this.anims.play('EnzoDownRun', true);
   }
 
   update(): void {
