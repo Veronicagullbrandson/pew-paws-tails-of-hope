@@ -1,4 +1,6 @@
 import { Entity } from "./Entity";
+import { Taunt } from "./Taunt";
+
 import { Projectile } from "./Projectile";
 export class Player extends Entity {
   private keyW: Phaser.Input.Keyboard.Key;
@@ -14,6 +16,8 @@ export class Player extends Entity {
   private projectiles: Array<Projectile>;
   private lastPosition: Phaser.Math.Vector2;
   private health: integer; // värde för liv
+  private tauntTimer: Phaser.Time.TimerEvent;
+  private currentTaunt: Taunt | null = null;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'cat');
@@ -31,6 +35,7 @@ export class Player extends Entity {
     this.getBody().setOffset(0, 0);
     this.initAnimation();
     this.launchTimer = 0;
+    this.initTauntTimer();
     this.getBody().setCollideWorldBounds(true);
   }
   private initAnimation(): void {
@@ -60,6 +65,24 @@ export class Player extends Entity {
     });
     // Add the following line to start the 'EnzoDownRun' animation immediately
     this.anims.play('EnzoDownRun', true);
+  }
+
+  private initTauntTimer(): void {
+    this.tauntTimer = this.scene.time.addEvent({
+      delay: Phaser.Math.Between(8000, 10000), // Random delay between 5 to 10 seconds
+      callback: this.launchTaunt,
+      callbackScope: this,
+      loop: true
+    });
+    this.launchTaunt();
+  }
+
+  private launchTaunt(): void {
+    if (this.currentTaunt) {
+      this.currentTaunt.destroy(); // Ensure to remove any existing taunt before creating a new one
+    }
+    this.currentTaunt = new Taunt(this.scene, this.x, this.y);
+    this.currentTaunt.displayAt(this.x, this.y);
   }
 
   update(): void {
@@ -126,5 +149,19 @@ export class Player extends Entity {
       }
     }
     this.lastPosition = new Phaser.Math.Vector2(this.x, this.y);
+
+    if (this.currentTaunt) {
+      this.currentTaunt.setPosition(this.x, this.y);
+    }
+  }
+
+  destroy(): void {
+    if (this.currentTaunt) {
+      this.currentTaunt.destroy();
+    }
+    if (this.tauntTimer) {
+      this.tauntTimer.remove();
+    }
+    super.destroy();
   }
 }
