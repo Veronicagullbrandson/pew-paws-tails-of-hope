@@ -2,6 +2,7 @@ import { Entity } from "./Entity";
 import { Taunt } from "./Taunt";
 
 import { Projectile } from "./Projectile";
+import { Scene } from "phaser";
 export class Player extends Entity {
   private keyW: Phaser.Input.Keyboard.Key;
   private keyA: Phaser.Input.Keyboard.Key;
@@ -15,9 +16,10 @@ export class Player extends Entity {
   private launchTimer: integer;
   public projectiles: Array<Projectile>;
   private lastPosition: Phaser.Math.Vector2;
-  private health: integer; // värde för liv
+  public health: integer; // värde för hälsa
   private tauntTimer: Phaser.Time.TimerEvent;
   private currentTaunt: Taunt | null = null;
+  public isDead: boolean;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'cat');
@@ -39,6 +41,8 @@ export class Player extends Entity {
     this.launchTimer = 0;
     this.initTauntTimer();
     this.getBody().setCollideWorldBounds(true);
+    this.health = 9;
+    this.isDead = false;
   }
   private initAnimation(): void {
     this.scene.anims.create({
@@ -88,6 +92,10 @@ export class Player extends Entity {
   }
 
   update(): void {
+    if (this.isDead) {
+      return;
+    }
+
     let speed: number = 110;
     for (let i = 0; i < this.projectiles.length; i++) {
       if (this.projectiles[i] !== undefined) {
@@ -168,4 +176,23 @@ export class Player extends Entity {
     }
     super.destroy();
   }
-}
+  // Metod för att spelaren tar skada
+  public PlayertakeDamage(damage: integer): void {
+    if (this.isDead) {
+      return;
+    }
+    this.health -= damage;
+    if (this.health <= 0) {
+        this.die();
+    }
+  }
+     // Metod för att hantera död
+     private die(): void {
+      // Exempel på att ta bort fienden från spelet
+      this.scene.add.text(this.scene.cameras.main.centerX, this.scene.cameras.main.centerY, 'ENZO DIED', { fontSize: '32px', color: '#FFF' }).setOrigin(0.5);
+      this.destroy(); //Ta bort spelaren
+      this.isDead = true;
+      
+ }
+} 
+

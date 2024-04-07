@@ -5,6 +5,7 @@ export class Enemy extends Entity {
     private counter: integer;
     private health: integer; // värde för liv
     private lastPosition: Phaser.Math.Vector2;
+    public isDead: boolean;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, 'cat');
@@ -16,6 +17,7 @@ export class Enemy extends Entity {
         this.counter = 1;
         this.health = 1; // Sätt health till 1 för Enemy
         this.getBody().setCollideWorldBounds(true);
+        this.isDead = false;
     }
     private initAnimation(): void {
       this.scene.anims.create({
@@ -47,6 +49,10 @@ export class Enemy extends Entity {
     }
 
     update(): void {
+      if (this.isDead) {
+        return;
+      }
+
       const projectiles = this.scene.player.projectiles;
       let hit = false;
       breakme: for (let i = 0; i < projectiles.length; i++) {
@@ -57,7 +63,6 @@ export class Enemy extends Entity {
             hit = true;
             projectiles[i].destroy();
         });
-      }
       this.counter--;
       if (this.counter == 0) {
         this.direction = Math.floor(Math.random() * 4);
@@ -100,7 +105,7 @@ export class Enemy extends Entity {
       }
     }
     // Metod för att ta skada
-    public takeDamage(damage: integer): void {
+    public EnemytakeDamage(damage: integer): void {
       this.health -= damage;
       if (this.health <= 0) {
           this.die();
@@ -111,5 +116,6 @@ export class Enemy extends Entity {
     private die(): void {
         this.scene.sound.play('EnemyDead');
         this.destroy(); // Exempel på att ta bort fienden från spelet
+        this.isDead = true;
     }
 }
