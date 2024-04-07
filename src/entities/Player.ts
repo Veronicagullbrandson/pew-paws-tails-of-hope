@@ -6,8 +6,10 @@ export class Player extends Entity {
   private keyD: Phaser.Input.Keyboard.Key;
   private keySpace: Phaser.Input.Keyboard.Key;
   private keyShift: Phaser.Input.Keyboard.Key; // running
+  private keyK: Phaser.Input.Keyboard.Key; // Lägg till denna rad
   private launchTimer: integer;
   private lastPosition: Phaser.Math.Vector2;
+  private health: integer; // värde för liv
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'cat');
@@ -17,6 +19,7 @@ export class Player extends Entity {
     this.keyD = this.scene.input.keyboard.addKey('D');
     this.keyShift = this.scene.input.keyboard.addKey('Shift');
     this.keySpace = this.scene.input.keyboard.addKey('Space');
+    this.keyK = this.scene.input.keyboard.addKey('K'); // Lägg till denna rad
     this.getBody().setSize(28, 32);
     this.getBody().setOffset(8, 0);
     this.initAnimation();
@@ -82,6 +85,10 @@ export class Player extends Entity {
       this.scene.sound.play('bananljud');
       this.launchTimer = 30;
     }
+
+    if (this.keyK.isDown) { // Lägg till denna rad
+      this.damageEnemy(); // skadar fienden 
+    } 
 
     const currentPos = new Phaser.Math.Vector2(this.x, this.y);
     if (this.lastPosition) {

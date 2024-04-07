@@ -3,6 +3,7 @@ export class Enemy extends Entity {
     private speed: integer;
     private direction: integer; //int between 0 and 3, 0 -> up, 1 -> right osv
     private counter: integer;
+    private health: integer; // värde för liv
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, 'cat');
         this.getBody().setSize(16, 16);
@@ -11,6 +12,7 @@ export class Enemy extends Entity {
         this.speed = 60;
         this.direction = Math.floor(Math.random() * 4);
         this.counter = 1;
+        this.health = 1; // Sätt health till 1 för Enemy
     }
     private initAnimation(): void {
       this.scene.anims.create({
@@ -46,5 +48,17 @@ export class Enemy extends Entity {
       }
     
     }
-  
+    // Metod för att ta skada
+    public takeDamage(damage: integer): void {
+        this.health -= damage;
+        if (this.health <= 0) {
+            this.die();
+        }
+    }
+
+    // Metod för att hantera död
+    private die(): void {
+        this.scene.sound.play('Enemydead');
+        this.destroy(); // Exempel på att ta bort fienden från spelet
+    }
 }
