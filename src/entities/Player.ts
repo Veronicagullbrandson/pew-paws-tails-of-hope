@@ -24,6 +24,7 @@ export class Player extends Entity {
     this.getBody().setOffset(8, 0);
     this.initAnimation();
     this.launchTimer = 0;
+    
   }
   private initAnimation(): void {
     this.scene.anims.create({
@@ -86,9 +87,6 @@ export class Player extends Entity {
       this.launchTimer = 30;
     }
 
-    if (this.keyK.isDown) { // Lägg till denna rad
-      this.damageEnemy(); // skadar fienden 
-    } 
 
     const currentPos = new Phaser.Math.Vector2(this.x, this.y);
     if (this.lastPosition) {

@@ -58,7 +58,7 @@ export class Enemy extends Entity {
 
     // Metod för att hantera död
     private die(): void {
-        this.scene.sound.play('Enemydead');
+        this.scene.sound.play('EnemyDead');
         this.destroy(); // Exempel på att ta bort fienden från spelet
     }
 }
