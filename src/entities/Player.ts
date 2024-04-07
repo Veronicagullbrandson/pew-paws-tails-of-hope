@@ -21,6 +21,7 @@ export class Player extends Entity {
     this.getBody().setOffset(0, 0);
     this.initAnimation();
     this.launchTimer = 0;
+    this.getBody().setCollideWorldBounds(true);
   }
   private initAnimation(): void {
     this.scene.anims.create({
