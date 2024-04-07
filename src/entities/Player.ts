@@ -14,7 +14,7 @@ export class Player extends Entity {
   private keyLeft: Phaser.Input.Keyboard.Key;
   private keyRight: Phaser.Input.Keyboard.Key;
   private launchTimer: integer;
-  private projectiles: Array<Projectile>;
+  public projectiles: Array<Projectile>;
   private lastPosition: Phaser.Math.Vector2;
   public health: integer; // värde för hälsa
   private tauntTimer: Phaser.Time.TimerEvent;
@@ -98,7 +98,9 @@ export class Player extends Entity {
 
     let speed: number = 110;
     for (let i = 0; i < this.projectiles.length; i++) {
-      this.projectiles[i].update();
+      if (this.projectiles[i] !== undefined) {
+        this.projectiles[i].update();
+      }
     }
     if (this.launchTimer > 0) {
       this.launchTimer--;

@@ -52,6 +52,17 @@ export class Enemy extends Entity {
       if (this.isDead) {
         return;
       }
+
+      const projectiles = this.scene.player.projectiles;
+      let hit = false;
+      breakme: for (let i = 0; i < projectiles.length; i++) {
+        this.scene.physics.add.overlap(this, projectiles[i], () =>
+        {
+            this.takeDamage(1);
+            console.log("Hit");
+            hit = true;
+            projectiles[i].destroy();
+        });
       this.counter--;
       if (this.counter == 0) {
         this.direction = Math.floor(Math.random() * 4);

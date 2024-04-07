@@ -21,9 +21,9 @@ export class Projectile extends Entity {
     }
     
     update(): void {
-     
-      this.anims.play('projectileA',true)
-     
+      if (this.scene !== undefined) {
+        this.anims.play('projectileA',true);
+      } 
     }
   
 }
