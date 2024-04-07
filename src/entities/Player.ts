@@ -15,6 +15,7 @@ export class Player extends Entity {
   private launchTimer: integer;
   private projectiles: Array<Projectile>;
   private lastPosition: Phaser.Math.Vector2;
+  private health: integer; // värde för liv
   private tauntTimer: Phaser.Time.TimerEvent;
   private currentTaunt: Taunt | null = null;
 
@@ -30,8 +31,6 @@ export class Player extends Entity {
     this.keyDown = this.scene.input.keyboard.addKey('Down');
     this.keyLeft = this.scene.input.keyboard.addKey('Left');
     this.keyRight = this.scene.input.keyboard.addKey('Right');
-
-
     this.getBody().setSize(28, 32);
     this.getBody().setOffset(0, 0);
     this.initAnimation();
@@ -127,22 +126,20 @@ export class Player extends Entity {
       this.scene.sound.play('bananljud');
       this.launchTimer = 30;
       this.projectiles.push(new Projectile(this.scene, this.x, this.y,0+this.body.velocity.x,1000+this.body.velocity.y))
-      console.log()
     }
 
     if (this.keyRight?.isDown && this.launchTimer == 0) {
       this.scene.sound.play('bananljud');
       this.launchTimer = 30;
       this.projectiles.push(new Projectile(this.scene, this.x, this.y, 1000+this.body.velocity.x, 0+this.body.velocity.y))
-      console.log()
     }
 
     if (this.keyLeft?.isDown && this.launchTimer == 0) {
       this.scene.sound.play('bananljud');
       this.launchTimer = 30;
       this.projectiles.push(new Projectile(this.scene, this.x, this.y, -1000+this.body.velocity.x, 0+this.body.velocity.y))
-      console.log()
     }
+
 
     const currentPos = new Phaser.Math.Vector2(this.x, this.y);
     if (this.lastPosition) {

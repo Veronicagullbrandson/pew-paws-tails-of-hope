@@ -3,6 +3,7 @@ export class Enemy extends Entity {
     private speed: integer;
     private direction: integer; //int between 0 and 3, 0 -> up, 1 -> right osv
     private counter: integer;
+    private health: integer; // värde för liv
     private lastPosition: Phaser.Math.Vector2;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -13,6 +14,7 @@ export class Enemy extends Entity {
         this.speed = 60;
         this.direction = Math.floor(Math.random() * 4);
         this.counter = 1;
+        this.health = 1; // Sätt health till 1 för Enemy
         this.getBody().setCollideWorldBounds(true);
     }
     private initAnimation(): void {
@@ -82,6 +84,19 @@ export class Enemy extends Entity {
       if (diff.length() == 0) {
         this.anims.stop();
       }
+    }
+    // Metod för att ta skada
+    public takeDamage(damage: integer): void {
+        this.health -= damage;
+        if (this.health <= 0) {
+            this.die();
+        }
+    }
+
+    // Metod för att hantera död
+    private die(): void {
+        this.scene.sound.play('EnemyDead');
+        this.destroy(); // Exempel på att ta bort fienden från spelet
     }
     this.lastPosition = new Phaser.Math.Vector2(this.x, this.y);
   }

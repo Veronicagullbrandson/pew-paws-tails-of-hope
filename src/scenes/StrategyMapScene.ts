@@ -3,7 +3,9 @@ import { Player } from './../entities/Player';
 import { Enemy } from './../entities/Enemy';
 
 export class StrategyMapScene extends Phaser.Scene {
-    private player: Player
+    private player: Player;
+    private enemy: Enemy;
+    
 
     constructor() {
       super('StrategyMapScene');
@@ -18,6 +20,7 @@ export class StrategyMapScene extends Phaser.Scene {
         this.load.spritesheet('runSpriteEnemy', 'assets/sprites/purple_walk.png', { frameWidth: 28, frameHeight: 32 });
         //this.load.spritesheet('runSprite', 'assets/sprites/7 walk.png', { frameWidth: 16, frameHeight: 16 });
         this.load.audio('bananljud', 'assets/audio/bananljud.mp3');
+        this.load.audio('EnemyDead', 'assets/audio/Enemy-dead.mp3');
         this.load.audio('enemySound1', 'assets/audio/enemy-sound1.mp3');
         this.load.audio('enemySound2', 'assets/audio/enemy-sound2.mp3');
         this.load.spritesheet('projectileSprite', 'assets/sprites/bollElla.png', { frameWidth: 16, frameHeight: 16 });
@@ -34,10 +37,24 @@ export class StrategyMapScene extends Phaser.Scene {
         this.enemy = new Enemy(this, 400, 300);
         this.physics.add.collider(this.player, collision);
         this.physics.add.collider(this.enemy, collision);
+
+        // Lägg till en timer som skadar fienden efter 5 sekunder
+        this.time.addEvent({
+            delay: 5000, // 5000 ms = 5 sekunder
+            callback: () => {
+                this.enemy.takeDamage(1); // Skadar fienden med 10 poäng
+            },
+            callbackScope: this,
+            loop: false // Om du vill att detta ska upprepas, sätt loop till true
+        });
     }
 
     update(): void {
         this.player.update();
-        this.enemy.update();
+        console.log(this.enemy);
+        if(this.enemy.body != undefined) {
+            this.enemy.update();
+        }
+        
     }
 }
