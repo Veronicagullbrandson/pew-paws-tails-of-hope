@@ -52,6 +52,8 @@ export class Player extends Entity {
 
   update(): void {
     let speed: number = 110;
+    let moving = false; // Flag to detect movement
+
     if (this.launchTimer > 0) {
       this.launchTimer--;
     }
@@ -59,27 +61,35 @@ export class Player extends Entity {
       speed = 160;
     }
     this.getBody().setVelocity(0);
+
     if (this.keyW?.isDown) {
       this.body.velocity.y = -speed;
-      this.anims.play('EnzoUpRun', true)
+      this.anims.play('EnzoUpRun', true);
+      moving = true;
     }
     if (this.keyA?.isDown) {
       this.body.velocity.x = -speed;
-      this.anims.play('EnzoLeftRun', true)
+      this.anims.play('EnzoLeftRun', true);
+      moving = true;
     }
     if (this.keyS?.isDown) {
       this.body.velocity.y = speed;
-      this.anims.play('EnzoDownRun', true)
+      this.anims.play('EnzoDownRun', true);
+      moving = true;
     }
     if (this.keyD?.isDown) {
       this.body.velocity.x = speed;
-      this.anims.play('EnzoRightRun', true)
+      this.anims.play('EnzoRightRun', true);
+      moving = true;
     }
     if (this.keySpace?.isDown && this.launchTimer == 0) {
       this.scene.sound.play('bananljud');
       this.launchTimer = 30;
     }
 
+    if (!moving) {
+      this.anims.stop();
+    }
   }
 
 }
