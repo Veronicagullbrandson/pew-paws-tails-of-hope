@@ -31,8 +31,10 @@ export class Player extends Entity {
     this.keyDown = this.scene.input.keyboard.addKey('Down');
     this.keyLeft = this.scene.input.keyboard.addKey('Left');
     this.keyRight = this.scene.input.keyboard.addKey('Right');
-    this.getBody().setSize(28, 32);
-    this.getBody().setOffset(0, 0);
+
+    this.getBody().setSize(28, 16);
+    this.getBody().setOffset(0, 16);
+
     this.initAnimation();
     this.launchTimer = 0;
     this.initTauntTimer();
