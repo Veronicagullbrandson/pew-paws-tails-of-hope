@@ -6,10 +6,12 @@ export class StrategyMapScene extends Phaser.Scene {
     private player: Player;
     private enemy: Enemy;
     private healthBar: Phaser.GameObjects.Graphics;
-    
+    private enemies: Array<Enemy>;
+    private collision: Tilemap;
 
     constructor() {
       super('StrategyMapScene');
+      this.enemies = [];
     }
 
     preload() {
@@ -25,29 +27,31 @@ export class StrategyMapScene extends Phaser.Scene {
         this.load.audio('enemySound1', 'assets/audio/enemy-sound1.mp3');
         this.load.audio('enemySound2', 'assets/audio/enemy-sound2.mp3');
         this.load.spritesheet('projectileSprite', 'assets/sprites/bollElla.png', { frameWidth: 16, frameHeight: 16 });
+        this.load.audio('backgroundMusic', 'assets/audio/background map.mp3');
     }
 
     create() {
         const map = this.make.tilemap({ key: "map" });
         const tileset = map.addTilesetImage("Tileset", "tiles");
         const floor = map.createLayer('Floor', tileset, 0, 0);
-        const collision = map.createLayer('Collision', tileset, 0, 0);
-        collision.setCollisionByExclusion([-1], true);
+        this.collision = map.createLayer('Collision', tileset, 0, 0);
+        this.collision.setCollisionByExclusion([-1], true);
 
         this.player = new Player(this, 300, 300);
-        this.enemy = new Enemy(this, 400, 300);
-        this.physics.add.collider(this.player, collision);
-        this.physics.add.collider(this.enemy, collision);
+        this.enemies.push(new Enemy(this, 400, 300));
+        this.physics.add.collider(this.player, this.collision);
+        this.physics.add.collider(this.enemies[0], this.collision);
 
         // Lägg till en timer som skadar fienden efter 5 sekunder
         this.time.addEvent({
             delay: 5000, // 5000 ms = 5 sekunder
             callback: () => {
-                this.enemy.EnemytakeDamage(1); // Skadar fienden med 10 poäng
+                this.enemies[0].takeDamage(1); // Skadar fienden med 10 poäng
             },
             callbackScope: this,
             loop: false // Om du vill att detta ska upprepas, sätt loop till true
         });
+
         //this.time.addEvent({
         //    delay: 10000, // 5000 ms = 5 sekunder
         //    callback: () => {
@@ -58,6 +62,11 @@ export class StrategyMapScene extends Phaser.Scene {
         //});
         this.healthBar = this.add.graphics();
         
+
+        // Spela upp bakgrundsmusiken med 25% volym
+        
+        this.sound.play('backgroundMusic', { volume: 0.25, loop: true });
+
     }
 updateHealthBar() {
     this.healthBar.clear();
@@ -65,14 +74,18 @@ updateHealthBar() {
     this.healthBar.fillRect(20,20,20*this.player.health, 20)
 }
     update(): void {
+        if (Math.floor(Math.random() * 400) == 0) {
+            this.enemies.push(new Enemy(this, 400, 300));
+            this.physics.add.collider(this.enemies[this.enemies.length - 1], this.collision);
+        }
         this.player.update();
         this.updateHealthBar();
-        if(this.enemy && !this.enemy.isDead) {
-            this.enemy.update();
-        }
+
         if(this.player && !this.player.isDead) {
-            this.enemy.update();
+        for (let i = 0; i < this.enemies.length; i++) {
+          if(this.enemies[i].body != undefined) {
+            this.enemies[i].update();
+          }
         }
-        
     }
 }
