@@ -28,9 +28,6 @@ export class WelcomeScene extends Phaser.Scene {
       startButton.y += 2; // Move the button back down by 2 pixels when the pointer is no longer over it
     });
 
-    startButton.on('pointerdown', () => {
-      this.scene.start('StrategyMapScene');
-    });
 
     characterButton.on('pointerdown', () => {
       this.scene.start('ServerTestScene');
@@ -38,7 +35,7 @@ export class WelcomeScene extends Phaser.Scene {
     });
     startButton.on('pointerdown', () => {
       this.sound.stopByKey('backgroundMusic'); // Stop the background music before changing the scene
-      this.scene.start('ServerTestScene');
+      this.scene.start('StrategyMapScene');
     });
 
     this.sound.play('backgroundMusic', { loop: true, volume:0.25 });
