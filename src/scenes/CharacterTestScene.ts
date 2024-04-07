@@ -12,7 +12,7 @@ export class CharacterTestScene extends Phaser.Scene {
     preload() {
       this.load.image('grass', 'assets/tiles/grass.png');
       this.load.image('cat', 'assets/tiles/grass.png');
-      this.load.spritesheet('runSprite', 'assets/sprites/7 walk.png', { frameWidth: 16, frameHeight: 16 });
+      this.load.spritesheet('runSprite', 'assets/sprites/Enzo walk.png', { frameWidth: 28, frameHeight: 32 });
       this.load.audio('bananljud', 'assets/audio/bananljud.mp3');  
     }
 
