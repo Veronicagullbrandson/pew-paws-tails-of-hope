@@ -21,7 +21,7 @@ export class StrategyMapScene extends Phaser.Scene {
         const tileset = map.addTilesetImage("Tileset", "tiles");
         const floor = map.createLayer('Floor', tileset, 0, 0);
         const collision = map.createLayer('Collision', tileset, 0, 0);
-        collision.setCollisionByExclusion(-1, true);
+        collision.setCollisionByExclusion([-1], true);
         this.player = new Player(this, 100, 200);
         this.physics.add.collider(this.player, collision);
     }
