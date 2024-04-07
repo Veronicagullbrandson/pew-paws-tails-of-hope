@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import { Room, Client } from "colyseus.js";
-import { GridEngine } from 'grid-engine';
 import { Player } from './../entities/Player';
 
 export class ServerTestScene extends Phaser.Scene {
