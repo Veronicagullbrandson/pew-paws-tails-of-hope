@@ -53,6 +53,7 @@ export class Enemy extends Entity {
         this.counter = 80;
       }
       this.getBody().setVelocity(0);
+      this.lastPosition = new Phaser.Math.Vector2(this.x, this.y);
       if (this.direction == 0) {
         this.body.velocity.y = -this.speed;
         this.anims.play('EnemyUpRun', true);
@@ -78,19 +79,21 @@ export class Enemy extends Entity {
         }
       }
     
-    const currentPos = new Phaser.Math.Vector2(this.x, this.y);
-    if (this.lastPosition) {
-      const diff = currentPos.clone().subtract(this.lastPosition);
-      if (diff.length() == 0) {
-        this.anims.stop();
+      const currentPos = new Phaser.Math.Vector2(this.x, this.y);
+      
+      if (this.lastPosition) {
+        const diff = currentPos.clone().subtract(this.lastPosition);
+        if (diff.length() == 0) {
+          this.anims.stop();
+        }
       }
     }
     // Metod för att ta skada
     public takeDamage(damage: integer): void {
-        this.health -= damage;
-        if (this.health <= 0) {
-            this.die();
-        }
+      this.health -= damage;
+      if (this.health <= 0) {
+          this.die();
+      }
     }
 
     // Metod för att hantera död
@@ -98,6 +101,4 @@ export class Enemy extends Entity {
         this.scene.sound.play('EnemyDead');
         this.destroy(); // Exempel på att ta bort fienden från spelet
     }
-    this.lastPosition = new Phaser.Math.Vector2(this.x, this.y);
-  }
 }
