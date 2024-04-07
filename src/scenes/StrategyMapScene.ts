@@ -51,7 +51,6 @@ export class StrategyMapScene extends Phaser.Scene {
 
     update(): void {
         this.player.update();
-        console.log(this.enemy);
         if(this.enemy.body != undefined) {
             this.enemy.update();
         }
