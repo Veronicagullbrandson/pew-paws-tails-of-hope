@@ -10,8 +10,8 @@ export class StrategyMapScene extends Phaser.Scene {
     private collision: Tilemap;
 
     constructor() {
-      super('StrategyMapScene');
-      this.enemies = [];
+        super('StrategyMapScene');
+        this.enemies = [];
     }
 
     preload() {
@@ -57,11 +57,11 @@ export class StrategyMapScene extends Phaser.Scene {
         this.sound.play('backgroundMusic', { volume: 0.25, loop: true });
 
     }
-updateHealthBar() {
-    this.healthBar.clear();
-    this.healthBar.fillStyle(0xff0000,1);
-    this.healthBar.fillRect(20,20,20*this.player.health, 20)
-}
+    updateHealthBar() {
+        this.healthBar.clear();
+        this.healthBar.fillStyle(0xff0000, 1);
+        this.healthBar.fillRect(20, 20, 20 * this.player.health, 20)
+    }
     update(): void {
         if (Math.floor(Math.random() * 400) == 0) {
             this.enemies.push(new Enemy(this, 400, 300));
@@ -70,11 +70,12 @@ updateHealthBar() {
         this.player.update();
         this.updateHealthBar();
 
-        if(this.player && !this.player.isDead) {
-        for (let i = 0; i < this.enemies.length; i++) {
-          if(this.enemies[i].body != undefined) {
-            this.enemies[i].update();
-          }
+        if (this.player && !this.player.isDead) {
+            for (let i = 0; i < this.enemies.length; i++) {
+                if (this.enemies[i].body != undefined) {
+                    this.enemies[i].update();
+                }
+            }
         }
     }
 }
