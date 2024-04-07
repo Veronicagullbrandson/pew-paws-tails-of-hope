@@ -5,6 +5,7 @@ import { Enemy } from './../entities/Enemy';
 export class StrategyMapScene extends Phaser.Scene {
     private player: Player;
     private enemy: Enemy;
+    private healthBar: Phaser.GameObjects.Graphics;
     
 
     constructor() {
@@ -42,16 +43,34 @@ export class StrategyMapScene extends Phaser.Scene {
         this.time.addEvent({
             delay: 5000, // 5000 ms = 5 sekunder
             callback: () => {
-                this.enemy.takeDamage(1); // Skadar fienden med 10 poäng
+                this.enemy.EnemytakeDamage(1); // Skadar fienden med 10 poäng
             },
             callbackScope: this,
             loop: false // Om du vill att detta ska upprepas, sätt loop till true
         });
+        //this.time.addEvent({
+        //    delay: 10000, // 5000 ms = 5 sekunder
+        //    callback: () => {
+        //        this.player.PlayertakeDamage(1); // Skadar spelaren med 1 poäng
+        //    },
+        //    callbackScope: this,
+        //    loop: true // Om du vill att detta ska upprepas, sätt loop till true
+        //});
+        this.healthBar = this.add.graphics();
+        
     }
-
+updateHealthBar() {
+    this.healthBar.clear();
+    this.healthBar.fillStyle(0xff0000,1);
+    this.healthBar.fillRect(20,20,20*this.player.health, 20)
+}
     update(): void {
         this.player.update();
-        if(this.enemy.body != undefined) {
+        this.updateHealthBar();
+        if(this.enemy && !this.enemy.isDead) {
+            this.enemy.update();
+        }
+        if(this.player && !this.player.isDead) {
             this.enemy.update();
         }
         
