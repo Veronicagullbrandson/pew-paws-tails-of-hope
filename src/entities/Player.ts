@@ -18,7 +18,7 @@ export class Player extends Entity {
     this.keyShift = this.scene.input.keyboard.addKey('Shift');
     this.keySpace = this.scene.input.keyboard.addKey('Space');
     this.getBody().setSize(28, 32);
-    this.getBody().setOffset(8, 0);
+    this.getBody().setOffset(0, 0);
     this.initAnimation();
     this.launchTimer = 0;
   }
