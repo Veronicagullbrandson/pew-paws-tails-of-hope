@@ -27,6 +27,7 @@ export class StrategyMapScene extends Phaser.Scene {
         this.load.audio('enemySound1', 'assets/audio/enemy-sound1.mp3');
         this.load.audio('enemySound2', 'assets/audio/enemy-sound2.mp3');
         this.load.spritesheet('projectileSprite', 'assets/sprites/bollElla.png', { frameWidth: 16, frameHeight: 16 });
+        this.load.audio('backgroundMusic', 'assets/audio/background map.mp3');
     }
 
     create() {
@@ -50,6 +51,10 @@ export class StrategyMapScene extends Phaser.Scene {
             callbackScope: this,
             loop: false // Om du vill att detta ska upprepas, sätt loop till true
         });
+
+        // Spela upp bakgrundsmusiken med 25% volym
+        
+        this.sound.play('backgroundMusic', { volume: 0.25, loop: true });
     }
 
     update(): void {
