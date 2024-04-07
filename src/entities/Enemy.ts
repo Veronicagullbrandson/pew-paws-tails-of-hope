@@ -13,6 +13,7 @@ export class Enemy extends Entity {
         this.speed = 60;
         this.direction = Math.floor(Math.random() * 4);
         this.counter = 1;
+        this.getBody().setCollideWorldBounds(true);
     }
     private initAnimation(): void {
       this.scene.anims.create({
@@ -65,6 +66,14 @@ export class Enemy extends Entity {
       if (this.direction == 1) {
         this.body.velocity.x = this.speed;
         this.anims.play('EnemyRightRun', true);
+      }
+
+      if (Math.floor(Math.random() * 400) == 0) {
+        if (Math.floor(Math.random() * 2) == 0) {
+          this.scene.sound.play('enemySound1');
+        } else {
+          this.scene.sound.play('enemySound2');
+        }
       }
     
     const currentPos = new Phaser.Math.Vector2(this.x, this.y);
