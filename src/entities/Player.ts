@@ -78,7 +78,6 @@ export class Player extends Entity {
       this.launchTimer = 30;
     }
 
-
   }
 
 }
