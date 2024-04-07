@@ -42,18 +42,7 @@ export class StrategyMapScene extends Phaser.Scene {
         this.physics.add.collider(this.player, this.collision);
         this.physics.add.collider(this.enemies[0], this.collision);
 
-        // Lägg till en timer som skadar fienden efter 5 sekunder
-        this.time.addEvent({
-            delay: 5000, // 5000 ms = 5 sekunder
-            callback: () => {
-                this.enemies[0].takeDamage(1); // Skadar fienden med 10 poäng
-            },
-            callbackScope: this,
-            loop: false // Om du vill att detta ska upprepas, sätt loop till true
-        });
-
         // Spela upp bakgrundsmusiken med 25% volym
-        
         this.sound.play('backgroundMusic', { volume: 0.25, loop: true });
     }
 
